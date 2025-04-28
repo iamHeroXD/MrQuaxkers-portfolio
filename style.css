@@ -117,8 +117,8 @@ body {
   max-width: 600px; 
   max-height: 200px; 
   filter: drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.3)); 
+  filter: brightness(1);
 }
-
 
 .home-overlay {
   background: rgba(255, 255, 255, 0.2);
@@ -135,6 +135,7 @@ body {
   font-weight: 700;
   text-align: center;
   margin-bottom: 60px;
+  margin-top: 30px;
   color: #111;
   position: relative;
   display: inline-block;
@@ -179,40 +180,73 @@ body {
 
 /* Works Section */
 .works-section {
-  padding: 100px 50px 50px;
+  padding: 0;
   background-color: #f9f9f9;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.works-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 40px;
+.works-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.works-slider {
+  width: 80%;
+  position: relative;
 }
 
 .work-card {
-  background-color: #ffffff;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: none;
+  width: 100%;
+  text-align: center;
+}
+
+.work-card.active {
+  display: block;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .work-card img {
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.work-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+.nav-btn {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
 
-.work-card:hover img {
-  transform: scale(1.05);
+.nav-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
 }
 
 /* Contact Section */
@@ -228,7 +262,6 @@ body {
 .contact-section .section-title {
   animation: fadeUp 1s forwards 0.2s, pulse 2s infinite alternate;
 }
-
 
 @keyframes pulse {
   0% { transform: scale(1); }
