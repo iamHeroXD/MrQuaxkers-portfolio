@@ -1,4 +1,4 @@
-// Smooth scroll for anchor links
+// scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener("click", function(e) {
     e.preventDefault();
@@ -74,4 +74,66 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialize first slide
   showSlide(0);
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Fullscreen Image Viewer
+  const thumbnails = document.querySelectorAll('.thumbnail');
+  const overlay = document.getElementById('overlay');
+  const fullscreenImg = document.getElementById('fullscreenImg');
+  const closeBtn = document.getElementById('closeBtn');
+  
+  // Track current image index
+  let currentImageIndex = 0;
+  const images = Array.from(thumbnails).map(img => img.src);
+  
+  // Open fullscreen when clicking a thumbnail
+  thumbnails.forEach((thumb, index) => {
+      thumb.addEventListener('click', function() {
+          currentImageIndex = index;
+          fullscreenImg.src = this.src;
+          overlay.style.display = 'flex';
+          document.body.style.overflow = 'hidden'; // Prevent scrolling
+      });
+  });
+  
+  // Close fullscreen
+  closeBtn.addEventListener('click', closeFullscreen);
+  
+  // Close when clicking outside image
+  overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) {
+          closeFullscreen();
+      }
+  });
+  
+  // Keyboard navigation (arrow keys + ESC)
+  document.addEventListener('keydown', function(e) {
+      if (overlay.style.display === 'flex') {
+          // ESC to close
+          if (e.key === 'Escape') {
+              closeFullscreen();
+          }
+          // Right arrow for next image
+          else if (e.key === 'ArrowRight') {
+              navigate(1);
+          }
+          // Left arrow for previous image
+          else if (e.key === 'ArrowLeft') {
+              navigate(-1);
+          }
+      }
+  });
+  
+  // Navigation between images
+  function navigate(direction) {
+      currentImageIndex = (currentImageIndex + direction + images.length) % images.length;
+      fullscreenImg.src = images[currentImageIndex];
+  }
+  
+  // Close function
+  function closeFullscreen() {
+      overlay.style.display = 'none';
+      document.body.style.overflow = 'auto'; // Re-enable scrolling
+  }
 });
